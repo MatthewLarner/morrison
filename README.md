@@ -1,2 +1,2 @@
 # morrison
-Morrison protects your inputs by only allowing certain characters in.
+Morrison protects your state by rejecting undesirable charaters.
