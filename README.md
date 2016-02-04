@@ -1,2 +1,2 @@
 # morrison
-Morrison protects your state by rejecting undesirable charaters.
+Morrison protects your state by rejecting undesirable characters.
