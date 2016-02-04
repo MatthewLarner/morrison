@@ -1,0 +1,30 @@
+{
+  "name": "morrison",
+  "version": "1.0.0",
+  "description": "Morrison protects your inputs by only allowing certain characters in.",
+  "main": "index.js",
+  "scripts": {
+    "test": "browserify ./test | tape-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthewLarner/morrison.git"
+  },
+  "author": "Matthew Larner <matt.larner.dev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MatthewLarner/morrison/issues"
+  },
+  "homepage": "https://github.com/MatthewLarner/morrison#readme",
+  "dependencies": {
+    "doc-js": "^1.3.1",
+    "natural-selection": "^1.0.0",
+    "setify": "^1.0.3"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "crel": "^2.1.8",
+    "tape": "^4.4.0",
+    "tape-run": "^2.1.3"
+  }
+}

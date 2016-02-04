@@ -1,2 +1,12 @@
 # morrison
-Morrison protects your inputs by only allowing certain characters in.
+Morrison protects your state by rejecting undesirable characters.
+
+
+## Usage
+```javascript
+var morrison = require('morrison');
+
+window.onload = function() {
+    morrison();
+};
+```
