@@ -37,8 +37,7 @@ function validatePaste(event, regex){
     event.preventDefault();
 
     var element = event.target,
-        pastedData = event.clipboardData.getData('Text'),
-        maxLength = element.maxLength;
+        pastedData = event.clipboardData.getData('Text');
 
     pastedData = constructInsertString(element, pastedData);
     pastedData = pastedData.split('')
@@ -63,27 +62,23 @@ var defaultValidators =  {
     '[type=number]': /^\d*$|^\d*\.$|^\d*\.\d+$/
 };
 
-function parseRegex(regexString){
-    var regexParts = regexString.match(/^\/(.*)\/(.*)$/);
-
-    return regexParts && new RegExp(regexParts[1], regexParts[2]);
-}
-
 module.exports = function(settings) {
+    settings = settings || {};
+
     var parentElement = settings.parentElement || document,
         validators = settings.validators || module.exports.defaultValidators(),
         selectors = Object.keys(validators).join(', ');
 
-    function getValidatorKey(validatorKey) {
-        if(doc.is(event.target, validatorKey)) {
-            return validatorKey;
-        }
-    }
-
     function validateInput(event) {
-        var validatorKey = Object.keys(validators).find(getValidatorKey);
 
-        var validator = eventValidators[event.type],
+        function getValidatorKey(validatorKey) {
+            if(doc.is(event.target, validatorKey)) {
+                return validatorKey;
+            }
+        }
+
+        var validatorKey = Object.keys(validators).find(getValidatorKey),
+            validator = eventValidators[event.type],
             regex = validators[validatorKey];
 
         if(!validator || !regex) {
@@ -97,5 +92,11 @@ module.exports = function(settings) {
 };
 
 module.exports.defaultValidators = function() {
-    return Object.create(defaultValidators);
+    var validators = {};
+
+    for (var key in defaultValidators) {
+        validators[key] = defaultValidators[key];
+    }
+
+    return validators;
 };
