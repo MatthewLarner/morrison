@@ -57,16 +57,13 @@ var eventValidators = {
     'keypress': validateKey
 };
 
-var defaultValidators =  {
-    '[type=email]': /^[^@]*$|^[^@]+@[^@]*$/,
-    '[type=number]': /^\d*$|^\d*\.$|^\d*\.\d+$/
-};
-
 module.exports = function(settings) {
-    settings = settings || {};
+    if(!settings || !settings.validators) {
+        throw('Settings object with validators required');
+    }
 
     var parentElement = settings.parentElement || document,
-        validators = settings.validators || module.exports.defaultValidators(),
+        validators = settings.validators,
         selectors = Object.keys(validators).join(', ');
 
     function validateInput(event) {
@@ -89,14 +86,4 @@ module.exports = function(settings) {
     }
 
     doc(parentElement).on('paste keypress', selectors, validateInput);
-};
-
-module.exports.defaultValidators = function() {
-    var validators = {};
-
-    for (var key in defaultValidators) {
-        validators[key] = defaultValidators[key];
-    }
-
-    return validators;
 };

@@ -1,22 +1,35 @@
 var crel = require('crel'),
-    merge = require('merge'),
     morrison = require('../'),
-    defaultValidators = morrison.defaultValidators(),
-    validators = merge(defaultValidators, {
+    validators = {
+        '[data-validate=email]': /^[^@]*$|^[^@]+@[^@]*$/,
+        '[data-validate=number]': /^\d*$|^\d*\.$|^\d*\.\d+$/,
         '[data-validate=integer]': /^\d*$/
-    });
+    };
+
+var integers = crel('div', {
+        class: 'example'
+    },
+    crel('input', {
+        'data-validate': 'integer'
+    }),
+    crel('label', 'Integers only')
+);
+
+var numbers = crel('div', {
+        class: 'example'
+    },
+    crel('input', {
+        'data-validate': 'number'
+    }),
+    crel('label', 'Numbers only')
+);
 
 window.onload = function() {
-    var example1 = crel('div', {
-            class: 'example'
-        },
-        crel('input', {
-            'data-validate': 'integer'
-        }),
-        crel('label', 'Integers only')
-    );
 
-    document.body.appendChild(example1);
+    crel(document.body,
+        integers,
+        numbers
+    );
 
     morrison({
         validators: validators
