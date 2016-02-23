@@ -1,10 +1,18 @@
 var crel = require('crel'),
+    doc = require('doc-js'),
     morrison = require('../'),
     validators = {
-        '[data-validate=email]': /^[^@]*$|^[^@]+@[^@]*$/,
         '[data-validate=number]': /^\d*$|^\d*\.$|^\d*\.\d+$/,
-        '[data-validate=integer]': /^\d*$/
+        '[data-validate=integer]': /^\d*$/,
+        '[data-validate=foo]': /^f$|^fo$|^foo$/
     };
+
+var instructions = crel('div', {
+        class: 'instructions'
+    },
+    crel('h3', 'Paste the following text into each of the inputs'),
+    crel('label', '123.123.f1o0...o')
+);
 
 var integers = crel('div', {
         class: 'example'
@@ -24,14 +32,25 @@ var numbers = crel('div', {
     crel('label', 'Numbers only')
 );
 
-window.onload = function() {
+var foo = crel('div', {
+        class: 'example'
+    },
+    crel('input', {
+        'data-validate': 'foo'
+    }),
+    crel('label', 'foo only')
+);
+
+doc.ready(function() {
 
     crel(document.body,
+        instructions,
         integers,
-        numbers
+        numbers,
+        foo
     );
 
     morrison({
         validators: validators
     });
-};
+});

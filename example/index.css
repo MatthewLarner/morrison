@@ -1,0 +1,12 @@
+body {
+    font-family: sans-serif;
+}
+
+.example {
+    margin: 12px;
+    padding: 12px;
+}
+
+input, label {
+    margin: 8px;
+}
