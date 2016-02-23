@@ -4,7 +4,8 @@
   "description": "Morrison protects your inputs by only allowing certain characters in.",
   "main": "index.js",
   "scripts": {
-    "test": "browserify ./tests | tape-run"
+    "test": "watchify ./tests | tape-run",
+    "example": "watchify ./example/index.js -o ./example/index.browser.js -d & open ./example/index.html"
   },
   "repository": {
     "type": "git",

@@ -37,8 +37,7 @@ function validatePaste(event, regex){
     event.preventDefault();
 
     var element = event.target,
-        pastedData = event.clipboardData.getData('Text'),
-        maxLength = element.maxLength;
+        pastedData = event.clipboardData.getData('Text');
 
     pastedData = constructInsertString(element, pastedData);
     pastedData = pastedData.split('')
@@ -58,32 +57,25 @@ var eventValidators = {
     'keypress': validateKey
 };
 
-var defaultValidators =  {
-    '[type=email]': /^[^@]*$|^[^@]+@[^@]*$/,
-    '[type=number]': /^\d*$|^\d*\.$|^\d*\.\d+$/
-};
-
-function parseRegex(regexString){
-    var regexParts = regexString.match(/^\/(.*)\/(.*)$/);
-
-    return regexParts && new RegExp(regexParts[1], regexParts[2]);
-}
-
 module.exports = function(settings) {
-    var parentElement = settings.parentElement || document,
-        validators = settings.validators || module.exports.defaultValidators(),
-        selectors = Object.keys(validators).join(', ');
-
-    function getValidatorKey(validatorKey) {
-        if(doc.is(event.target, validatorKey)) {
-            return validatorKey;
-        }
+    if(!settings || !(settings && settings.validators)) {
+        throw('Settings object with validators required');
     }
 
-    function validateInput(event) {
-        var validatorKey = Object.keys(validators).find(getValidatorKey);
+    var parentElement = settings.parentElement || document,
+        validators = settings.validators,
+        selectors = Object.keys(validators).join(', ');
 
-        var validator = eventValidators[event.type],
+    function validateInput(event) {
+
+        function getValidatorKey(validatorKey) {
+            if(doc.is(event.target, validatorKey)) {
+                return validatorKey;
+            }
+        }
+
+        var validatorKey = Object.keys(validators).find(getValidatorKey),
+            validator = eventValidators[event.type],
             regex = validators[validatorKey];
 
         if(!validator || !regex) {
@@ -94,8 +86,4 @@ module.exports = function(settings) {
     }
 
     doc(parentElement).on('paste keypress', selectors, validateInput);
-};
-
-module.exports.defaultValidators = function() {
-    return Object.create(defaultValidators);
 };
