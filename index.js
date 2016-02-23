@@ -58,7 +58,7 @@ var eventValidators = {
 };
 
 module.exports = function(settings) {
-    if(!settings || !settings.validators) {
+    if(!settings || !(settings && settings.validators)) {
         throw('Settings object with validators required');
     }
 
