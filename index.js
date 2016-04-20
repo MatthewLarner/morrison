@@ -1,6 +1,7 @@
 var doc = require('doc-js'),
     setify = require('setify'),
-    naturalSelection = require('natural-selection');
+    naturalSelection = require('natural-selection'),
+    fireEvent = require('fire-html-event');
 
 function constructInsertString(element, insertValue){
     var result = '',
@@ -25,6 +26,10 @@ function validateInput(testString, regex) {
 }
 
 function validateKey(event, regex) {
+    if(event.metaKey) {
+        return;
+    }
+
     var newChar = String.fromCharCode(event.which),
         testString = constructInsertString(event.target, newChar);
 
@@ -50,6 +55,8 @@ function validatePaste(event, regex){
         }, '');
 
     setify(element, pastedData);
+
+    fireEvent(event.target, 'change');
 }
 
 var eventValidators = {
