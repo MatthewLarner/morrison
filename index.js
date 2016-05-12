@@ -1,7 +1,8 @@
 var doc = require('doc-js'),
     setify = require('setify'),
     naturalSelection = require('natural-selection'),
-    fireEvent = require('fire-html-event');
+    fireEvent = require('fire-html-event'),
+    allowedKeys = [0, 8, 13, 9];
 
 function constructInsertString(element, insertValue){
     var result = '',
@@ -26,7 +27,7 @@ function validateInput(testString, regex) {
 }
 
 function validateKey(event, regex) {
-    if(event.metaKey) {
+    if(event.metaKey || ~allowedKeys.indexOf(event.which)) {
         return;
     }
 
