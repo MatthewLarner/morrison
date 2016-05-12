@@ -1,6 +1,6 @@
 {
   "name": "morrison",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Morrison protects your inputs by only allowing certain characters in.",
   "main": "index.js",
   "scripts": {
