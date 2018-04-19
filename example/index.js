@@ -4,7 +4,8 @@ var crel = require('crel'),
     validators = {
         '[data-validate=number]': /^\d*$|^\d*\.$|^\d*\.\d+$/,
         '[data-validate=integer]': /^\d*$/,
-        '[data-validate=foo]': /^f$|^fo$|^foo$/
+        '[data-validate=foo]': /^f$|^fo$|^foo$/,
+        '[data-validate=abn]': /^\d{0,2}\s?\d{0,3}\s?\d{0,3}\s?\d{0,3}$/
     };
 
 var instructions = crel('div', {
@@ -41,13 +42,24 @@ var foo = crel('div', {
     crel('label', 'foo only')
 );
 
+var abn = crel('div', {
+        class: 'example'
+    },
+    crel('input', {
+        'data-validate': 'abn'
+    }),
+    crel('label', 'abn only')
+);
+
+
 doc.ready(function() {
 
     crel(document.body,
         instructions,
         integers,
         numbers,
-        foo
+        foo,
+        abn
     );
 
     morrison({
